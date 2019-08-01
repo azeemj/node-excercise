@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Hello world</title>
+   </head>
+   <script src = "/socket.io/socket.io.js"></script>
+   <script src="http://code.jquery.com/jquery-1.10.2.min.js" ></script>
+   <script>
+      var socket = io();
+      socket.on('broadcast',function(data) {
+        // document.body.innerHTML = '';
+        // document.write(data.description);
+      });
+      socket.on('bid', function(content) {alert('broadcast',content)
+      $('#bids').append("<br>"+content["amount"] + "");
+ });
+ socket.on('newMessage', function(content) {
+      $('#welcome').append("<br>"+content+ "");
+ });
+
+   
+$(document).ready(function(){
+  $("p").click(function(){
+    alert("The paragraph was clicked."+ $('#data').val());
+    socket.emit('bid', { "amount" : $('#data').val() });
+  });
+});
+   </script>
+   <body>Hello world
+    <input type ="text" id="data"></input>
+       
+        <button class="favorite styled"  id="submit"
+        type="button">
+    Add to favorites
+</button>
+
+        <p id="bids"></p>
+        <p id="welcome"></p>
+
+        <p>Click on this paragraph.</p>
+    </body>
+</html>
